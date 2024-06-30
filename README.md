@@ -1,5 +1,8 @@
-Скрипт для бд(не забудьте поменять конекш стринг)
+### Создание схемы БД
 
+Вы можете использовать следующий SQL скрипт для создания необходимых таблиц и добавления начальных данных:
+
+```sql
 CREATE TABLE Users (
     UserId SERIAL PRIMARY KEY,
     Login VARCHAR(50) NOT NULL,
@@ -7,10 +10,12 @@ CREATE TABLE Users (
     Email VARCHAR(100) NOT NULL,
     PasswordHash VARCHAR(100) NOT NULL
 );
+
 CREATE TABLE RequestTypes (
     RequestTypeId SERIAL PRIMARY KEY,
     TypeName VARCHAR(50) NOT NULL
 );
+
 CREATE TABLE Requests (
     RequestId SERIAL PRIMARY KEY,
     PhoneNumber VARCHAR(20) NOT NULL,
@@ -23,7 +28,8 @@ CREATE TABLE Requests (
     FOREIGN KEY (UserId) REFERENCES Users(UserId)
 );
 
-INSERT INTO RequestTypes (TypeName) VALUES
-('Продажа'),
-('Покупка'),
-('Аукцион');
+INSERT INTO RequestTypes (TypeName) VALUES 
+    ('Продажа'),
+    ('Покупка'),
+    ('Аукцион');
+
