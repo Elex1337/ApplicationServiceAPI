@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ApplicationService.Domain.Entities;
 
 public class User
@@ -6,5 +8,5 @@ public class User
     public string Login { get; set; }
     public string FullName { get; set; }
     public string Email { get; set; }
-    public string PasswordHash { get; set; }
+    public string Password { get; set; }
 }

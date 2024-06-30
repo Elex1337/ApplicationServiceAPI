@@ -6,12 +6,12 @@ using Microsoft.Extensions.Logging;
 
 namespace ApplicationService.Application.Applications.Commands
 {
-    public class RegisterUserCommandHandler : IRequestHandler<ApplicationServiceRegistrationCommand, Result<User>>
+    public class ApplicationRegisterUserCommandHandler : IRequestHandler<ApplicationServiceRegistrationCommand, Result<User>>
     {
         private readonly IRepository _repository;
-        private readonly ILogger<RegisterUserCommandHandler> _logger;
+        private readonly ILogger<ApplicationRegisterUserCommandHandler> _logger;
 
-        public RegisterUserCommandHandler(IRepository repository, ILogger<RegisterUserCommandHandler> logger)
+        public ApplicationRegisterUserCommandHandler(IRepository repository, ILogger<ApplicationRegisterUserCommandHandler> logger)
         {
             _repository = repository;
             _logger = logger;
@@ -20,7 +20,14 @@ namespace ApplicationService.Application.Applications.Commands
         public async Task<Result<User>> Handle(ApplicationServiceRegistrationCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Start command");
-
+            
+            var existingUser = await _repository.GetUserByLoginOrEmailAsync(request.Login, request.Email, cancellationToken);
+            
+            if (existingUser != null)
+            {
+                return Result.Failure<User>(new Error("400", "Пользователь с таким логином или же почтой уже существует"));
+            }
+            
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.PasswordHash);
 
             var user = new User
@@ -28,7 +35,7 @@ namespace ApplicationService.Application.Applications.Commands
                 Login = request.Login,
                 FullName = request.FullName,
                 Email = request.Email,
-                PasswordHash = hashedPassword
+                Password = hashedPassword
             };
 
             await _repository.AddUserAsync(user, cancellationToken);

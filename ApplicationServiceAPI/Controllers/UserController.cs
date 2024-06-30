@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ApplicationServiceAPI.Controllers
 {
     [ApiController]
-    [Route("Sign In")]
+    [Route("Регистрация")]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -24,6 +24,7 @@ namespace ApplicationServiceAPI.Controllers
                 request.FullName,
                 request.Email,
                 request.PasswordHash));
+            
             if (newUser.IsSuccess)
             {
                 return Ok(newUser);
