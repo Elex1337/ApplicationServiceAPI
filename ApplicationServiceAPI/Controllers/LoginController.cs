@@ -6,7 +6,7 @@ using ApplicationServiceAPI.Contracts.Requests;
 namespace ApplicationServiceAPI.Controllers
 {
     [ApiController]
-    [Route("api/auth")]
+    [Route("login")]
     public class AuthController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -16,7 +16,7 @@ namespace ApplicationServiceAPI.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("login")]
+        [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             if (request == null || string.IsNullOrEmpty(request.Login) || string.IsNullOrEmpty(request.Password))

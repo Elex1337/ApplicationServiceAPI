@@ -1,6 +1,13 @@
+using FluentValidation;
+
 namespace ApplicationService.Application.Applications.Commands;
 
-public class LoginCommandValidator
+public class LoginCommandValidator : AbstractValidator<LoginCommand>
+
 {
-    //TODO
+    public LoginCommandValidator()
+    {
+        RuleFor(x => x.Login).NotEmpty().WithMessage("Не долнж быть пустым");
+        RuleFor(x => x.Password).NotEmpty().WithMessage("не должно быть пустым");
+    }
 }

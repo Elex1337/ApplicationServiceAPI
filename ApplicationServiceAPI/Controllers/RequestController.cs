@@ -6,7 +6,7 @@ using MediatR;
 
 namespace ApplicationServiceAPI.Controllers
 {
-    [Route("api/")]
+    [Route("myrequest")]
     [ApiController]
     [Authorize]
     public class RequestController : ControllerBase
@@ -18,7 +18,7 @@ namespace ApplicationServiceAPI.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("myrequests")]
+        [HttpGet]
         public async Task<ActionResult> GetMyRequests()
         {   
             var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
