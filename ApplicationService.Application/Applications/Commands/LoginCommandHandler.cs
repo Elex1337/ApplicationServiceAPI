@@ -6,23 +6,27 @@ using ApplicationService.Domain.Entities;
 using KDS.Primitives.FluentResult;
 using MediatR;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ApplicationService.Application.Applications.Commands
 {
     public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<string>>
     {
+        private readonly ILogger<LoginCommandHandler> _logger;
         private readonly IRepository _repository;
         private readonly IConfiguration _configuration;
 
-        public LoginCommandHandler(IRepository repository, IConfiguration configuration)
+        public LoginCommandHandler(IRepository repository, IConfiguration configuration, ILogger<LoginCommandHandler> logger)
         {
             _repository = repository;
             _configuration = configuration;
+            _logger = logger;
         }
 
         public async Task<Result<string>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("start command");
             var user = await _repository.GetUserAsync(request.Login, request.Password);
             
             if (user == null || user.Password != request.Password)
@@ -31,6 +35,7 @@ namespace ApplicationService.Application.Applications.Commands
             } 
           
             var token = GenerateJwtToken(user);
+            _logger.LogInformation("end command");
             return Result.Success(token);
         }
 

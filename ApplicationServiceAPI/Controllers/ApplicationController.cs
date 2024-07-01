@@ -3,6 +3,7 @@ using ApplicationService.Application.Applications.Queries;
 using ApplicationServiceAPI.Contracts.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ILogger = Serilog.ILogger;
 
 namespace ApplicationServiceAPI.Controllers;
 
@@ -11,10 +12,12 @@ namespace ApplicationServiceAPI.Controllers;
 public class ApplicationController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly ILogger<ApplicationController> _logger;
 
-    public ApplicationController(IMediator mediator)
+    public ApplicationController(IMediator mediator, ILogger<ApplicationController> logger)
     {
         _mediator = mediator;
+        _logger = logger;
     }
     
     [HttpPost]
@@ -33,6 +36,7 @@ public class ApplicationController : ControllerBase
         }
 
         {
+            _logger.LogError("пройзошла ошибка в заявке");
             return BadRequest();
         }
     }

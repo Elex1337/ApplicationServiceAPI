@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using ApplicationService.Application.Applications.Commands;
 using MediatR;
 using ApplicationServiceAPI.Contracts.Requests;
+using ILogger = Serilog.ILogger;
 
 namespace ApplicationServiceAPI.Controllers
 {
@@ -9,11 +10,13 @@ namespace ApplicationServiceAPI.Controllers
     [Route("login")]
     public class AuthController : ControllerBase
     {
+        private readonly ILogger<AuthController> _logger;
         private readonly IMediator _mediator;
 
-        public AuthController(IMediator mediator)
+        public AuthController(IMediator mediator, ILogger<AuthController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -21,6 +24,7 @@ namespace ApplicationServiceAPI.Controllers
         {
             if (request == null || string.IsNullOrEmpty(request.Login) || string.IsNullOrEmpty(request.Password))
             {
+                _logger.LogError("Empty Login ");
                 return BadRequest("Missing login or password");
             }
 
@@ -32,6 +36,7 @@ namespace ApplicationServiceAPI.Controllers
             }
             else
             {
+                _logger.LogError("Unauthroized");
                 return Unauthorized(result.Error.Message);
             }
         }

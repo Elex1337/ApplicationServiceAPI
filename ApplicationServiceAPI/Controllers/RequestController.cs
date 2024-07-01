@@ -11,11 +11,13 @@ namespace ApplicationServiceAPI.Controllers
     [Authorize]
     public class RequestController : ControllerBase
     {
+        private readonly ILogger<RequestController> _logger;
         private readonly IMediator _mediator;
 
-        public RequestController(IMediator mediator)
+        public RequestController(IMediator mediator, ILogger<RequestController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -24,7 +26,8 @@ namespace ApplicationServiceAPI.Controllers
             var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userIdClaim) || !int.TryParse(userIdClaim, out int userId))
             {
-                return Unauthorized("User ID is not found or invalid in token");
+                _logger.LogError("Юзер не найден");
+                return Unauthorized("Юзер не найден или не правильный токен");
             }
 
             var requests = await _mediator.Send(new ApplicationServiceMyRequestQuery(userId));

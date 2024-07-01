@@ -7,13 +7,15 @@ namespace ApplicationServiceAPI.Controllers
 {
     [ApiController]
     [Route("registration")]
-    public class UsersController : ControllerBase
+    public class UserController : ControllerBase
     {
+        private readonly ILogger<UserController> _logger;
         private readonly IMediator _mediator;
 
-        public UsersController(IMediator mediator)
+        public UserController(IMediator mediator,ILogger<UserController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
         [HttpPost]
         public async Task<ActionResult> Register([FromBody] UserRequest request)
@@ -30,6 +32,7 @@ namespace ApplicationServiceAPI.Controllers
                 return Ok(newUser);
             }
             {
+                _logger.LogError("Что то случилось при регистарции");
                 return BadRequest();
             }
         }
