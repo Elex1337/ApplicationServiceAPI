@@ -1,6 +1,6 @@
 namespace ApplicationService.Application.Applications.Commands;
 
-public class ApplicationServiceRequestValidator
+public class LoginCommandValidator
 {
     //TODO
 }

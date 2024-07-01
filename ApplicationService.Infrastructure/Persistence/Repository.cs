@@ -34,15 +34,10 @@ namespace ApplicationService.Infrastructure.Persistence
         {
             return _dataContext.Set<Request>();
         }
-
-        public  async Task<User> GetUserByLoginAsync(string login)
+        public async Task<User> GetUserAsync(string login, string password)
         {
-            return await _dataContext.Users.SingleOrDefaultAsync(u => u.Login == login);
+            return await _dataContext.Users.FirstOrDefaultAsync(u => u.Login == login && u.Password == password);
         }
-
-        public async Task<bool> VerifyPasswordAsync(User user, string password)
-        {
-            return user.Password == password;
-        }
+        
     }
 }

@@ -27,15 +27,13 @@ namespace ApplicationService.Application.Applications.Commands
             {
                 return Result.Failure<User>(new Error("400", "Пользователь с таким логином или же почтой уже существует"));
             }
-            
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.PasswordHash);
 
             var user = new User
             {
                 Login = request.Login,
                 FullName = request.FullName,
                 Email = request.Email,
-                Password = hashedPassword
+                Password = request.Password
             };
 
             await _repository.AddUserAsync(user, cancellationToken);

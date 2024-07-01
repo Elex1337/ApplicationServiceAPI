@@ -11,5 +11,7 @@ namespace ApplicationService.Application.Interfaces
         Task<User> GetUserByLoginOrEmailAsync(string login, string email, CancellationToken cancellationToken); // Новый метод
         Task AddRequestAsync(Request eRequest, CancellationToken cancellationToken);
         IQueryable<Request> GetMyRequests();
+
+        Task<User> GetUserAsync(string login, string password);
     }
 }

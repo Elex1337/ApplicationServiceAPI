@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace ApplicationService.Domain.Entities;
 
 public class User

@@ -1,7 +1,5 @@
 namespace ApplicationServiceAPI.Contracts.Requests;
 
-public record UserRequest(
+public record LoginRequest(
     string Login,
-    string FullName,
-    string Email,
     string Password);

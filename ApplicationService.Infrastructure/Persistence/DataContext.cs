@@ -17,6 +17,7 @@ public class DataContext : DbContext, IDataContext
    }
    protected override void OnModelCreating(ModelBuilder modelBuilder)
    {
+      //Для постгресс чтобы правильно работало [Зачем я выбрал dbfirst :(] хэширование паролей не смог нормально настоить, хотел пофлексить в итоге пароли просто в стинге хранятся
       //Users
       modelBuilder.Entity<User>().ToTable("users");
       modelBuilder.Entity<User>().Property(u => u.Email).HasColumnName("email");

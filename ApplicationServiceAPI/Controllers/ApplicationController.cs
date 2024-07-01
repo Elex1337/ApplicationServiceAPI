@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ApplicationServiceAPI.Controllers;
 
 [ApiController]
-[Route("Заявки")]
+[Route("applications")]
 public class ApplicationController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -15,14 +15,6 @@ public class ApplicationController : ControllerBase
     public ApplicationController(IMediator mediator)
     {
         _mediator = mediator;
-    }
-
-    [HttpGet("Мои заявки")]
-    public async Task<ActionResult> GetMyRequests(int userId)
-    {
-        var requests = await _mediator.Send(new ApplicationServiceMyRequestQuery(userId));
-        return Ok(requests);
-
     }
     
     [HttpPost]

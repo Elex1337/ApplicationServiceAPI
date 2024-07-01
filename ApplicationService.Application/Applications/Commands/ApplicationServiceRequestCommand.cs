@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using ApplicationService.Domain.Entities;
 using KDS.Primitives.FluentResult;
 using MediatR;
@@ -19,7 +20,9 @@ public class ApplicationServiceRequestCommand : IRequest<Result<Request>>
     public string PhoneNumber { get; }
     public string FullName { get; }
     public string Email { get; }
+    [Required]
     public int RequestTypeId { get; }
+    [Required]
     public int UserId { get; }
     
 }
