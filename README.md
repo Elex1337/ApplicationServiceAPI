@@ -37,7 +37,7 @@ INSERT INTO RequestTypes (TypeName) VALUES
 
 ### Connection String
 
-Для подключения к базе данных используйте следующий connection string в вашем конфигурационном файле:
+Для подключения к базе данных используйте cвой connection string в вашем конфигурационном файле:
 
 ```json
 "ConnectionStrings": {
