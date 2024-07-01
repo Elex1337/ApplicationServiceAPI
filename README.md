@@ -1,3 +1,4 @@
+
 ### Создание схемы БД
 
 Вы можете использовать следующий SQL скрипт для создания необходимых таблиц и добавления начальных данных:
@@ -32,4 +33,14 @@ INSERT INTO RequestTypes (TypeName) VALUES
     ('Продажа'),
     ('Покупка'),
     ('Аукцион');
+```
 
+### Connection String
+
+Для подключения к базе данных используйте следующий connection string в вашем конфигурационном файле:
+
+```json
+"ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Port=5432;Database=yourdb;User Id=user;Password=password;"
+}
+```
